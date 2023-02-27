@@ -1,0 +1,32 @@
+.press {
+  transition: transform 0.8s ease;
+  cursor: pointer;
+}
+.press:hover {
+  transform: scale(0.98);
+  opacity: 0.9;
+}
+
+.align-row {
+  @apply flex flex-row;
+}
+
+.align-col {
+  @apply flex flex-col;
+}
+
+.centered-row {
+  @apply flex flex-row items-center justify-center;
+}
+
+.centered-col {
+  @apply flex flex-col items-center justify-center;
+}
+
+.center {
+  @apply items-center justify-center;
+}
+
+.row-btwn {
+  @apply flex flex-row justify-between;
+}

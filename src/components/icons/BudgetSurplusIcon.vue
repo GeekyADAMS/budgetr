@@ -1,0 +1,52 @@
+<template>
+  <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="24" cy="24" r="24" fill="#36DC0C" />
+    <circle cx="24" cy="24" r="10" fill="white" />
+    <path
+      d="M21.5 25.75C21.5 26.72 22.25 27.5 23.17 27.5H25.05C25.85 27.5 26.5 26.82 26.5 25.97C26.5 25.06 26.1 24.73 25.51 24.52L22.5 23.47C21.91 23.26 21.51 22.94 21.51 22.02C21.51 21.18 22.16 20.49 22.96 20.49H24.84C25.76 20.49 26.51 21.27 26.51 22.24"
+      stroke="#36DC0C"
+      stroke-width="1.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+    <path
+      d="M24 19.5V28.5"
+      stroke="#36DC0C"
+      stroke-width="1.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+    <path d="M28.708 14.8V18" stroke="white" stroke-linecap="round" stroke-linejoin="round" />
+    <path
+      fill-rule="evenodd"
+      clip-rule="evenodd"
+      d="M28.208 14.9258C28.5524 15.0858 28.8862 15.2648 29.208 15.4615V17.9999C29.208 18.2761 28.9842 18.4999 28.708 18.4999C28.4319 18.4999 28.208 18.2761 28.208 17.9999V14.9258Z"
+      fill="#36DC0C"
+    />
+    <path d="M32.708 14L28.708 18" stroke="white" stroke-linecap="round" stroke-linejoin="round" />
+    <path
+      fill-rule="evenodd"
+      clip-rule="evenodd"
+      d="M30.7726 16.6425L29.0616 18.3536C28.8663 18.5488 28.5497 18.5488 28.3545 18.3536C28.1592 18.1583 28.1592 17.8417 28.3545 17.6465L30.0009 16C30.2689 16.2013 30.5265 16.4158 30.7726 16.6425Z"
+      fill="#36DC0C"
+    />
+    <path
+      d="M34.708 19.6001L34.708 16.4001"
+      stroke="white"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+    <path
+      d="M30.708 20.4L34.708 16.4"
+      stroke="white"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+    <path
+      fill-rule="evenodd"
+      clip-rule="evenodd"
+      d="M32.1695 18.2315C32.3665 18.5099 32.5496 18.7989 32.7178 19.0974L31.0616 20.7536C30.8663 20.9488 30.5497 20.9488 30.3545 20.7536C30.1592 20.5583 30.1592 20.2417 30.3545 20.0465L32.1695 18.2315Z"
+      fill="#36DC0C"
+    />
+  </svg>
+</template>

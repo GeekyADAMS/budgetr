@@ -1,0 +1,11 @@
+<template>
+  <svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path
+      d="M1.10999 12.295L6.38998 6.99996L1.10999 1.70496"
+      stroke="#666666"
+      stroke-width="1.8"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+  </svg>
+</template>
