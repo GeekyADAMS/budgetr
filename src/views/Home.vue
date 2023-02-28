@@ -8,7 +8,7 @@ import ExpenseIcon from '@/components/icons/ExpenseIcon.vue'
 import WalletIcon from '@/components/icons/WalletIcon.vue'
 
 import ArrowButton from '@/components/common/util/ArrowButton.vue'
-import MetricCard from '@/components/common/util/MetricCard.vue'
+import MetricCard from '@/components/common/util/cards/MetricCard.vue'
 import CreateBudgetModal from '@/components/common/modals/CreateBudget.vue'
 
 const showBudgetModal = ref(false)
