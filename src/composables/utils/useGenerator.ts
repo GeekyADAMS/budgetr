@@ -1,5 +1,5 @@
 export default function useGenerator() {
-  const generateCategoryID = (): string => {
+  const generateID = (): string => {
     // Generate 2 random uppercased letters
     let id = ''
     for (let i = 0; i < 2; i++) {
@@ -16,6 +16,6 @@ export default function useGenerator() {
   }
 
   return {
-    generateCategoryID
+    generateID
   }
 }

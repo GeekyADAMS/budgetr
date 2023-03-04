@@ -6,9 +6,7 @@ export interface State {
   allBudgetCategories: BudgetCategory[]
 }
 
-export const useBudgetCategoryStore = defineStore({
-  id: 'useBudgetCategory',
-
+export const useBudgetCategoryStore = defineStore('useBudgetCategory', {
   state: (): State => ({
     allBudgetCategories: [
       {
@@ -17,21 +15,35 @@ export const useBudgetCategoryStore = defineStore({
         color: '#A8FF80'
       },
       {
-        id: 'FB0002',
+        id: 'FB0001',
         title: 'Food',
         color: '#F7CA87'
       },
       {
-        id: 'HC0003',
+        id: 'HC0001',
         title: 'Healthcare',
         color: '#98F3F9'
       }
     ]
   }),
 
+  persist: {
+    storage: localStorage,
+    paths: ['allBudgetCategories']
+  },
+
   actions: {
     addBudgetCategory(category: BudgetCategory) {
+      for (let i = 0; i < this.allBudgetCategories.length; i++) {
+        if (
+          this.allBudgetCategories[i].id === category.id ||
+          this.allBudgetCategories[i].title.toLowerCase() === category.title.toLowerCase()
+        ) {
+          return 'Budget category already exists!'
+        }
+      }
       this.allBudgetCategories.push(category)
+      return null
     },
     removeCategory(id: string) {
       const index = this.getCategoryByIndex(id)

@@ -15,10 +15,6 @@ const { isOpen } = toRefs(props)
 
 const budgetName = ref('')
 const budgetAmount = ref(0)
-
-const hey = () => {
-  console.log(budgetName.value)
-}
 </script>
 
 <template>
@@ -29,20 +25,13 @@ const hey = () => {
         <p class="text-grey font-light text-sm mt-1">Enter budget details for the current month</p>
 
         <form class="mt-10 border border-grey-light rounded-xl p-5 pt-5 py-8">
-          <BaseInput
-            v-model:value="budgetName"
-            class="mb-4"
-            id="budget-name"
-            label="Budget Name"
-            @change="hey"
-          />
+          <BaseInput v-model:value="budgetName" class="mb-4" id="budget-name" label="Budget Name" />
           <BaseInput
             v-model:value="budgetAmount"
             class="mb-5"
             id="budget-amount"
             type="number"
             label="Budget Amount"
-            @change="hey"
           />
           <button class="bg-primary text-white w-full py-3 text-center press" @click.prevent="">
             Create Budget

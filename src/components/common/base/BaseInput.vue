@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, toRefs } from 'vue'
+import { computed, ref, toRefs, type StyleValue } from 'vue'
 
 const props = defineProps({
   id: {
@@ -21,12 +21,16 @@ const props = defineProps({
   maxLength: {
     type: String,
     default: ''
+  },
+  min: {
+    type: Number,
+    default: 0
   }
 })
 
 const emit = defineEmits(['update:value', 'change'])
 
-const { id, value: val } = toRefs(props)
+const { id, value: val, label, type } = toRefs(props)
 
 const value = computed({
   get: () => val.value,
@@ -35,6 +39,8 @@ const value = computed({
     emit('change', newVal)
   }
 })
+
+const isTouched = ref(false)
 </script>
 
 <template>
@@ -44,10 +50,16 @@ const value = computed({
       <input
         v-model="value"
         class="border border-grey-light px-3 py-2 text-dark font-semibold focus:border-primary outline-none"
+        :style="{ backgroundColor: type === 'color' ? value : undefined } as StyleValue"
         :id="id"
         :type="type"
         :maxlength="maxLength"
+        :min="min"
+        @focusout="isTouched = true"
       />
     </label>
+    <span v-show="isTouched && !value" class="text-red-300 mt-1.5 text-sm text-left font-light"
+      >Please enter valid {{ id }}</span
+    >
   </div>
 </template>

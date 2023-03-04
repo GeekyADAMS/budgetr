@@ -21,7 +21,11 @@ const { data } = toRefs(props)
   <div class="p-3 px-5 border-2 border-grey-light border-opacity-60 rounded-md">
     <div class="row-btwn">
       <CategoryIcon :color="data?.color" bg-color="red" />
-      <RemoveIcon class="mt-1 press w-4 h-4" @click="$emit('remove')" />
+      <RemoveIcon
+        v-if="!['HB0001', 'FB0001', 'HC0001'].includes(data?.id)"
+        class="mt-1 press w-4 h-4"
+        @click="$emit('remove')"
+      />
     </div>
 
     <p class="mt-4 text-dark text-xl capitalize">{{ data?.title }}</p>

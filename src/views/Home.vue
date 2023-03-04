@@ -11,7 +11,30 @@ import ArrowButton from '@/components/common/util/ArrowButton.vue'
 import MetricCard from '@/components/common/util/cards/MetricCard.vue'
 import CreateBudgetModal from '@/components/common/modals/CreateBudget.vue'
 
+import useDateTime from '@/composables/utils/useDateTime'
+
+import { useBudgetStore } from '@/stores/budget'
+
+import type { MonthlyBudget } from '@/types/budget/budget.interface'
+
+const budgetStore = useBudgetStore()
+
 const showBudgetModal = ref(false)
+
+const currentDate = ref(new Date())
+const { getMonthAndYear } = useDateTime()
+
+const currentMonthYear = ref(getMonthAndYear())
+
+const currentMonthBudget = ref<MonthlyBudget | undefined>()
+
+currentMonthBudget.value = budgetStore.getCurrentMonthBudget(currentMonthYear.value)
+
+const changeMonth = (value: number) => {
+  currentDate.value.setMonth(currentDate.value.getMonth() + value)
+
+  currentMonthYear.value = getMonthAndYear(currentDate.value)
+}
 </script>
 
 <template>
@@ -28,12 +51,12 @@ const showBudgetModal = ref(false)
         <span class="text-grey font-light">Current Month</span>
         <div class="align-row items-center mt-1">
           <CalendarGrey class="mr-1.5" />
-          <span class="text-xl font-semibold">February 2023</span>
+          <span class="text-xl font-semibold">{{ currentMonthYear }}</span>
 
           <div class="align-row items-center ml-5">
-            <ArrowButton class="rotate-180 animate-none" />
+            <ArrowButton :style="{ rotate: '180deg' }" @click.prevent="changeMonth(-1)" />
 
-            <ArrowButton class="ml-2" />
+            <ArrowButton class="ml-2" @click.prevent="changeMonth(1)" />
           </div>
         </div>
       </div>
@@ -67,7 +90,9 @@ const showBudgetModal = ref(false)
         >
           <span class="text-2xl">+</span>
         </div>
-        <span class="text-xl font-medium mt-4">Create Budget</span>
+        <span class="text-xl font-medium mt-4">{{
+          currentMonthBudget ? 'Edit budget' : 'Create Budget'
+        }}</span>
       </div>
     </div>
   </main>

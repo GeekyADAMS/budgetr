@@ -5,13 +5,17 @@ import { ref } from 'vue'
 import CreateCategoryModal from '@/components/common/modals/CreateCategory.vue'
 import CategoryCard from '@/components/common/util/cards/CategoryCard.vue'
 
-import { useBudgetCategoryStore } from '@/stores/categories'
+import { useBudgetCategoryStore } from '@/stores/category'
+
+import type { Expense } from '@/types/expense/expense.interface'
 
 const categoryStore = useBudgetCategoryStore()
 
 const budgetCategories = categoryStore.allBudgetCategories
 
 const showCreateCatModal = ref(false)
+
+const selectedExpense = ref<Expense | null>(null)
 
 const removeCategory = (id: string) => {
   categoryStore.removeCategory(id)
@@ -53,6 +57,7 @@ const removeCategory = (id: string) => {
   <CreateCategoryModal
     v-if="showCreateCatModal"
     :is-open="showCreateCatModal"
+    :selected-expense="selectedExpense"
     @close="showCreateCatModal = false"
   />
 </template>

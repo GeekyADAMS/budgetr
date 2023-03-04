@@ -5,10 +5,11 @@ import BaseModal from '../base/BaseModal.vue'
 import BaseInput from '../base/BaseInput.vue'
 
 import useGenerator from '@/composables/utils/useGenerator'
+import { useToast } from 'vue-toastification'
 
 import type { BudgetCategory } from '@/types/budget/category.interface'
 
-import { useBudgetCategoryStore } from '@/stores/categories'
+import { useBudgetCategoryStore } from '@/stores/category'
 
 const props = defineProps({
   isOpen: {
@@ -19,7 +20,9 @@ const props = defineProps({
 
 const emit = defineEmits(['close'])
 
-const { generateCategoryID } = useGenerator()
+const { generateID } = useGenerator()
+
+const toast = useToast()
 
 const categoryStore = useBudgetCategoryStore()
 
@@ -30,21 +33,25 @@ const categoryColor = ref('')
 
 const isAddingCategory = ref(false)
 
-const createCategory = () => {
+const createCategory = async () => {
   isAddingCategory.value = true
 
   const newCategory: BudgetCategory = {
-    id: generateCategoryID(),
+    id: generateID(),
     title: categoryName.value,
     color: categoryColor.value
   }
 
-  console.log(newCategory)
+  const error = categoryStore.addBudgetCategory(newCategory)
 
-  categoryStore.addBudgetCategory(newCategory)
+  if (error) {
+    toast.error(error)
+  } else {
+    toast.success(`New budget category <${newCategory.title}> added!`)
+    emit('close')
+  }
 
   isAddingCategory.value = false
-  emit('close')
 }
 </script>
 
@@ -59,30 +66,23 @@ const createCategory = () => {
           <BaseInput
             v-model:value="categoryName"
             class="mb-4"
-            id="expense-category"
+            id="category-name"
             label="Category Name"
             max-length="20"
           />
 
-          <div class="align-row items-center">
-            <BaseInput
-              v-model:value="categoryColor"
-              class="mb-5 cursor-pointer w-fit"
-              id="category-color"
-              type="color"
-              label="Pick Color"
-            />
-
-            <label
-              for="category-color"
-              class="w-16 h-7 ml-3 mt-2 border rounded-md cursor-pointer"
-              :style="{ backgroundColor: categoryColor }"
-            >
-            </label>
-          </div>
+          <BaseInput
+            v-model:value="categoryColor"
+            class="mb-5 cursor-pointer w-fit"
+            id="category-color"
+            type="color"
+            label="Pick Color"
+          />
 
           <button
             class="bg-primary text-white w-full mt-3 py-3 text-center press"
+            :class="{ disable: !(categoryName && categoryColor) }"
+            :disabled="!(categoryName && categoryColor)"
             @click.prevent="createCategory"
           >
             {{ isAddingCategory ? 'Adding category..' : 'Add Category' }}

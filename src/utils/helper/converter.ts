@@ -1,4 +1,6 @@
-export function hexToRgb(hex: string): number[] {
+export function hexToRgb(hex: string | undefined, opacity: number = 1): string {
+  if (!hex) return `rgba(0,0,0, ${opacity})`
+
   hex = hex.replace('#', '')
 
   if (hex.length === 3) {
@@ -9,5 +11,5 @@ export function hexToRgb(hex: string): number[] {
   const g = parseInt(hex.substring(2, 4), 16)
   const b = parseInt(hex.substring(4, 6), 16)
 
-  return [r, g, b]
+  return `rgba(${r}, ${g}, ${b}, ${opacity})`
 }
