@@ -13,3 +13,25 @@ export function hexToRgb(hex: string | undefined, opacity: number = 1): string {
 
   return `rgba(${r}, ${g}, ${b}, ${opacity})`
 }
+
+export function stringToCamelCase<T extends string>(str: T): T {
+  let result = ''
+  let nextCharUppercase = false
+
+  for (let i = 0; i < str.length; i++) {
+    const char = str[i]
+
+    if (char === ' ') {
+      nextCharUppercase = true
+    } else {
+      if (nextCharUppercase) {
+        result += char.toUpperCase()
+        nextCharUppercase = false
+      } else {
+        result += char.toLowerCase()
+      }
+    }
+  }
+
+  return result as T
+}

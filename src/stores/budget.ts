@@ -1,15 +1,19 @@
 import { defineStore } from 'pinia'
 
-import type { Expense } from '@/types/expense/expense.interface'
 import type { MonthlyBudget } from '@/types/budget/budget.interface'
 
+import { stringToCamelCase } from '@/utils/helper/converter'
+
+type AllBudgets = {
+  [key: string]: MonthlyBudget
+}
 export interface State {
-  budgets: Map<string, MonthlyBudget>
+  budgets: AllBudgets
 }
 
 export const useBudgetStore = defineStore('useBudget', {
   state: (): State => ({
-    budgets: new Map()
+    budgets: {}
   }),
 
   persist: {
@@ -18,14 +22,12 @@ export const useBudgetStore = defineStore('useBudget', {
   },
 
   actions: {
-    addNewExpense(expense: Expense) {
-      //
-    },
-    updateSavedExpense(expense: Expense) {
-      //
+    saveMonthlyBudget(monthYear: string, budget: MonthlyBudget) {
+      this.budgets[stringToCamelCase(monthYear)] = budget
     },
     getCurrentMonthBudget(monthYear: string): MonthlyBudget | undefined {
-      return this.budgets.get(monthYear)
+      const budget = this.budgets[monthYear]
+      return budget
     }
   }
 })

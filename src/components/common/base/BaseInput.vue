@@ -25,12 +25,16 @@ const props = defineProps({
   min: {
     type: Number,
     default: 0
+  },
+  required: {
+    type: Boolean,
+    default: false
   }
 })
 
 const emit = defineEmits(['update:value', 'change'])
 
-const { id, value: val, label, type } = toRefs(props)
+const { id, value: val, label, type, required } = toRefs(props)
 
 const value = computed({
   get: () => val.value,
@@ -46,7 +50,9 @@ const isTouched = ref(false)
 <template>
   <div class="form-group align-col w-full">
     <label :for="id" class="align-col focus-within:text-primary"
-      ><span class="text-left text-sm mb-1.5">{{ label }}</span>
+      ><span class="text-left text-sm mb-1.5"
+        >{{ label }} <span v-if="required" class="text-red-400">*</span></span
+      >
       <input
         v-model="value"
         class="border border-grey-light px-3 py-2 text-dark font-semibold focus:border-primary outline-none"
@@ -58,7 +64,9 @@ const isTouched = ref(false)
         @focusout="isTouched = true"
       />
     </label>
-    <span v-show="isTouched && !value" class="text-red-300 mt-1.5 text-sm text-left font-light"
+    <span
+      v-show="required && isTouched && !value"
+      class="text-red-300 mt-1.5 text-sm text-left font-light"
       >Please enter valid {{ id }}</span
     >
   </div>

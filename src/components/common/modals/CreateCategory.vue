@@ -69,6 +69,7 @@ const createCategory = async () => {
             id="category-name"
             label="Category Name"
             max-length="20"
+            :required="true"
           />
 
           <BaseInput
@@ -77,6 +78,7 @@ const createCategory = async () => {
             id="category-color"
             type="color"
             label="Pick Color"
+            :required="true"
           />
 
           <button

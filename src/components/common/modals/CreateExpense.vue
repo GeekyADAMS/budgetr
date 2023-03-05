@@ -98,6 +98,7 @@ const setExpenseCategory = (val: BudgetCategory) => {
             id="expense-name"
             label="Expense Title"
             max-length="150"
+            :required="true"
           />
 
           <BaseInput
@@ -107,6 +108,7 @@ const setExpenseCategory = (val: BudgetCategory) => {
             label="Expense Amount"
             type="number"
             :min="0"
+            :required="true"
           />
 
           <BaseInput
@@ -115,6 +117,7 @@ const setExpenseCategory = (val: BudgetCategory) => {
             id="expense-date"
             label="Expense Date"
             type="date"
+            :required="true"
           />
 
           <BaseSelect
@@ -122,6 +125,7 @@ const setExpenseCategory = (val: BudgetCategory) => {
             id="expense-category"
             label="Expense Category"
             :value="expenseData.category"
+            :required="true"
             @change="(val) => setExpenseCategory(val)"
           />
 

@@ -1,6 +1,6 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref, toRefs, type ComputedRef } from 'vue'
 
 import BudgetSurplusIcon from '@/components/icons/BudgetSurplusIcon.vue'
 import CalendarGrey from '@/components/icons/CalendarGrey.vue'
@@ -17,6 +17,8 @@ import { useBudgetStore } from '@/stores/budget'
 
 import type { MonthlyBudget } from '@/types/budget/budget.interface'
 
+import { stringToCamelCase } from '@/utils/helper/converter'
+
 const budgetStore = useBudgetStore()
 
 const showBudgetModal = ref(false)
@@ -26,9 +28,13 @@ const { getMonthAndYear } = useDateTime()
 
 const currentMonthYear = ref(getMonthAndYear())
 
-const currentMonthBudget = ref<MonthlyBudget | undefined>()
+const { budgets } = toRefs(budgetStore)
 
-currentMonthBudget.value = budgetStore.getCurrentMonthBudget(currentMonthYear.value)
+const currentMonthBudget: ComputedRef<MonthlyBudget | undefined> = computed(() => {
+  return budgets.value[stringToCamelCase(currentMonthYear.value)]
+})
+
+console.log('Here is budget', budgets.value)
 
 const changeMonth = (value: number) => {
   currentDate.value.setMonth(currentDate.value.getMonth() + value)
@@ -63,7 +69,10 @@ const changeMonth = (value: number) => {
     </div>
 
     <div class="w-full mt-8 align-row gap-x-4">
-      <MetricCard class="w-3/12">
+      <MetricCard
+        class="w-3/12"
+        :value="currentMonthBudget ? Number(currentMonthBudget?.amount) : 0"
+      >
         <template #icon>
           <WalletIcon />
         </template>
@@ -97,7 +106,11 @@ const changeMonth = (value: number) => {
     </div>
   </main>
 
-  <CreateBudgetModal :is-open="showBudgetModal" @close="showBudgetModal = false" />
+  <CreateBudgetModal
+    :is-open="showBudgetModal"
+    :month-year="currentMonthYear"
+    @close="showBudgetModal = false"
+  />
 </template>
 
 <style scoped>
