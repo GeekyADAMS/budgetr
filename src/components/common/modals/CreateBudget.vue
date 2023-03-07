@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, toRefs } from 'vue'
+import { computed, onMounted, ref, toRefs, watch, type PropType } from 'vue'
 
 import BaseModal from '../base/BaseModal.vue'
 import BaseInput from '../base/BaseInput.vue'
@@ -19,6 +19,14 @@ const props = defineProps({
     type: String,
     reqired: true,
     default: ''
+  },
+  currentBudget: {
+    type: Object as PropType<MonthlyBudget | undefined>,
+    required: true
+  },
+  mode: {
+    type: String,
+    default: 'create'
   }
 })
 
@@ -26,14 +34,18 @@ const emit = defineEmits(['close'])
 
 const toast = useToast()
 
-const { isOpen, monthYear } = toRefs(props)
+const { isOpen, monthYear, currentBudget, mode } = toRefs(props)
+
+const initialiseForm = (): MonthlyBudget => {
+  return {
+    title: '',
+    amount: 0
+  }
+}
 
 const budgetStore = useBudgetStore()
 
-const budgetData = ref<MonthlyBudget>({
-  title: '',
-  amount: 0
-})
+const budgetData = ref<MonthlyBudget>(initialiseForm())
 
 const isFormCompleted = computed(() => {
   const budget = budgetData.value
@@ -52,23 +64,32 @@ const saveMonthlyBudget = () => {
   console.log('Here is budget', budgetStore.budgets)
 
   isSavingBudget.value = false
-  resetForm()
+  initialiseForm()
   emit('close')
 }
 
-const resetForm = () => {
-  budgetData.value = {
-    title: '',
-    amount: 0
+watch(mode, () => {
+  if (mode.value === 'edit' && currentBudget.value) {
+    budgetData.value.amount = currentBudget.value.amount
+    budgetData.value.title = currentBudget.value.title
+  } else {
+    initialiseForm()
   }
+})
+
+const closeModal = () => {
+  initialiseForm()
+  emit('close')
 }
 </script>
 
 <template>
-  <BaseModal :is-open="isOpen" @close="$emit('close')">
+  <BaseModal :is-open="isOpen" @close="closeModal">
     <template #content>
       <div class="p-10 py-8 pb-16 text-center">
-        <h1 class="text-2xl font-medium">Create Budget</h1>
+        <h1 class="text-2xl font-medium">
+          {{ mode === 'create' ? 'Create Budget' : 'Edit Budget' }}
+        </h1>
         <p class="text-grey font-light text-sm mt-1">Enter budget details for the current month</p>
 
         <form class="mt-10 border border-grey-light rounded-xl p-5 pt-5 py-8">
@@ -78,7 +99,7 @@ const resetForm = () => {
             id="budget-name"
             label="Budget Name"
             max-length="100"
-            :required="false"
+            :required="true"
           />
           <BaseInput
             v-model:value="budgetData.amount"

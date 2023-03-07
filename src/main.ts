@@ -8,6 +8,8 @@ import 'vue-toastification/dist/index.css'
 
 import Popper from 'vue3-popper'
 
+import VueApexCharts from 'vue3-apexcharts'
+
 import App from './App.vue'
 import router from './router'
 
@@ -27,5 +29,6 @@ const toastOptions: PluginOptions = {
 app.use(pinia)
 app.use(router)
 app.use(Toast, toastOptions)
+app.use(VueApexCharts)
 
 app.mount('#app')

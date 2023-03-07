@@ -19,12 +19,16 @@ const props = defineProps({
   required: {
     type: Boolean,
     default: false
+  },
+  placeholder: {
+    type: String,
+    default: ''
   }
 })
 
 const emit = defineEmits(['update:value', 'change'])
 
-const { id, label, options, required } = toRefs(props)
+const { id, label, options, required, placeholder } = toRefs(props)
 
 const value = ref<unknown>(null)
 
@@ -41,10 +45,11 @@ const isTouched = ref<Boolean>(false)
         v-model="value"
         class="border border-grey-light px-3 py-2 text-dark font-semibold focus:border-primary outline-none"
         :id="id"
+        placeholder="hey"
         @focusout="isTouched = true"
         @change="emit('change', value)"
       >
-        <option value="" disabled>Select budget category</option>
+        <option value="" disabled selected>{{ placeholder }}</option>
 
         <option v-for="(option, optionIndex) in options" :key="optionIndex" :value="option">
           {{ option.title }}

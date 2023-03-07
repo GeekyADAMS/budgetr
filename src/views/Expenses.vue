@@ -1,20 +1,39 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 
 import CreateExpenseModal from '@/components/common/modals/CreateExpense.vue'
 import ExpenseTable from '@/components/expense/ExpenseTable.vue'
+import BaseInput from '@/components/common/base/BaseInput.vue'
+import BaseSelect from '@/components/common/base/BaseSelect.vue'
 
 import { useToast } from 'vue-toastification'
 
 import { useExpenseStore } from '@/stores/expense'
+import { useBudgetCategoryStore } from '@/stores/category'
+
 import type { Expense } from '@/types/expense/expense.interface'
 
 const toast = useToast()
 const expenseStore = useExpenseStore()
+const categoryStore = useBudgetCategoryStore()
 
 const allExpenses = expenseStore.allExpenses
 const selectedExpense = ref<Expense | null>(null)
+
+const searchTerm = ref('')
+
+const filteredExpense = computed(() => {
+  const expenses = allExpenses
+
+  return expenses.filter(
+    (expense) =>
+      expense.title.toLowerCase().includes(searchTerm.value.toLowerCase()) ||
+      expense.category?.title.toLowerCase().includes(searchTerm.value.toLowerCase())
+  )
+})
+
+const categories = categoryStore.allBudgetCategories
 
 const showCreateExpenseModal = ref(false)
 const createExpenseMode = ref('create')
@@ -44,6 +63,8 @@ const closeModal = () => {
   selectedExpense.value = null
   createExpenseMode.value = 'create'
 }
+
+console.log('Transactions: ', allExpenses[0])
 </script>
 
 <template>
@@ -62,14 +83,30 @@ const closeModal = () => {
       </button>
 
       <div class="align-col mt-16 w-8/12">
-        <h2 class="text-xl">All Expenses</h2>
+        <div class="row-btwn w-full">
+          <h2 class="text-xl">All Expenses</h2>
+
+          <div class="align-row w-80 items-center">
+            <BaseInput
+              v-model:value="searchTerm"
+              class="rounded-md"
+              id="expense-search"
+              placeholder="Search expense by name/category"
+              type="search"
+            />
+          </div>
+        </div>
 
         <div class="w-full mt-5 overflow-y-scroll" :style="{ height: '60vh' }">
           <ExpenseTable
-            :expenses="allExpenses"
+            :expenses="filteredExpense"
             @edit="(expense) => editExpenseHandler(expense)"
             @delete="(expense) => deleteExpense(expense)"
           />
+
+          <p v-show="!filteredExpense.length" class="mt-16 text-center text-accent font-bold">
+            No expense available
+          </p>
         </div>
       </div>
     </div>

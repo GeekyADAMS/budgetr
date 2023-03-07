@@ -4,6 +4,6 @@ export interface Expense {
   id: string
   title: string
   amount: number | string
-  date: string
+  date: Date
   category?: BudgetCategory
 }

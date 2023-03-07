@@ -7,7 +7,7 @@ const props = defineProps({
     required: true
   },
   value: {
-    type: [String, Number],
+    type: [String, Number, Date],
     default: ''
   },
   type: {
@@ -29,6 +29,10 @@ const props = defineProps({
   required: {
     type: Boolean,
     default: false
+  },
+  placeholder: {
+    type: String,
+    default: ''
   }
 })
 
@@ -60,6 +64,7 @@ const isTouched = ref(false)
         :id="id"
         :type="type"
         :maxlength="maxLength"
+        :placeholder="placeholder"
         :min="min"
         @focusout="isTouched = true"
       />

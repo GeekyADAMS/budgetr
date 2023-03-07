@@ -48,7 +48,7 @@ const expenseData = selectedExpense.value
       id: generateID(),
       title: '',
       amount: '',
-      date: '',
+      date: new Date(0),
       category: undefined
     })
 
@@ -64,6 +64,8 @@ const isSavingExpense = ref(false)
 
 const saveExpense = () => {
   isSavingExpense.value = true
+
+  expenseData.value.date = new Date(expenseData.value.date)
 
   if (mode.value === 'create') {
     expenseStore.addNewExpense(expenseData.value)
@@ -126,6 +128,7 @@ const setExpenseCategory = (val: BudgetCategory) => {
             label="Expense Category"
             :value="expenseData.category"
             :required="true"
+            placeholder="Select budget category"
             @change="(val) => setExpenseCategory(val)"
           />
 
