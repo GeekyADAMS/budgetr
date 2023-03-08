@@ -42,15 +42,19 @@ const { isOpen, selectedExpense, mode } = toRefs(props)
 
 const budgetCategories = categoryStore.allBudgetCategories
 
-const expenseData = selectedExpense.value
-  ? ref<Expense>(selectedExpense.value)
-  : ref<Expense>({
-      id: generateID(),
-      title: '',
-      amount: '',
-      date: new Date(0),
-      category: undefined
-    })
+const initialiseForm = (): Expense => {
+  return {
+    id: generateID(),
+    title: '',
+    amount: '',
+    date: new Date(0),
+    category: undefined
+  }
+}
+
+const expenseData = ref<Expense>(
+  selectedExpense.value ? { ...selectedExpense.value } : initialiseForm()
+)
 
 const isFormCompleted = computed(() => {
   const expense = expenseData.value

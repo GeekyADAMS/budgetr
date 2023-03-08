@@ -134,7 +134,7 @@ const createBudget = () => {
       </MetricCard>
 
       <div
-        class="pattern-bg centered-col w-3/12 flex flex-grow text-white p-6"
+        class="pattern-bg bg-blue-500 centered-col w-3/12 flex flex-grow text-white p-6"
         @click="createBudget"
       >
         <div
@@ -166,6 +166,7 @@ const createBudget = () => {
   </main>
 
   <CreateBudgetModal
+    v-if="showBudgetModal"
     :is-open="showBudgetModal"
     :month-year="currentMonthYear"
     :mode="createBudgetMode"
@@ -178,6 +179,6 @@ const createBudget = () => {
 .pattern-bg {
   background: url('@/assets/images/picture/blue-pattern-bg.png') !important;
   background-size: cover;
-  /* background-color: red; */
+  background-color: blue;
 }
 </style>

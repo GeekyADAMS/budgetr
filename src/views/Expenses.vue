@@ -5,18 +5,15 @@ import { computed, ref } from 'vue'
 import CreateExpenseModal from '@/components/common/modals/CreateExpense.vue'
 import ExpenseTable from '@/components/expense/ExpenseTable.vue'
 import BaseInput from '@/components/common/base/BaseInput.vue'
-import BaseSelect from '@/components/common/base/BaseSelect.vue'
 
 import { useToast } from 'vue-toastification'
 
 import { useExpenseStore } from '@/stores/expense'
-import { useBudgetCategoryStore } from '@/stores/category'
 
 import type { Expense } from '@/types/expense/expense.interface'
 
 const toast = useToast()
 const expenseStore = useExpenseStore()
-const categoryStore = useBudgetCategoryStore()
 
 const allExpenses = expenseStore.allExpenses
 const selectedExpense = ref<Expense | null>(null)
@@ -32,8 +29,6 @@ const filteredExpense = computed(() => {
       expense.category?.title.toLowerCase().includes(searchTerm.value.toLowerCase())
   )
 })
-
-const categories = categoryStore.allBudgetCategories
 
 const showCreateExpenseModal = ref(false)
 const createExpenseMode = ref('create')
@@ -63,8 +58,6 @@ const closeModal = () => {
   selectedExpense.value = null
   createExpenseMode.value = 'create'
 }
-
-console.log('Transactions: ', allExpenses[0])
 </script>
 
 <template>

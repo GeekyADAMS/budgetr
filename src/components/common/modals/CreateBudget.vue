@@ -45,7 +45,9 @@ const initialiseForm = (): MonthlyBudget => {
 
 const budgetStore = useBudgetStore()
 
-const budgetData = ref<MonthlyBudget>(initialiseForm())
+const budgetData = ref<MonthlyBudget>(
+  currentBudget.value ? { ...currentBudget.value } : initialiseForm()
+)
 
 const isFormCompleted = computed(() => {
   const budget = budgetData.value
@@ -61,30 +63,13 @@ const saveMonthlyBudget = () => {
   budgetStore.saveMonthlyBudget(monthYear.value, budgetData.value)
   toast.success(`Budget data for this month updated!`)
 
-  console.log('Here is budget', budgetStore.budgets)
-
   isSavingBudget.value = false
-  initialiseForm()
-  emit('close')
-}
-
-watch(mode, () => {
-  if (mode.value === 'edit' && currentBudget.value) {
-    budgetData.value.amount = currentBudget.value.amount
-    budgetData.value.title = currentBudget.value.title
-  } else {
-    initialiseForm()
-  }
-})
-
-const closeModal = () => {
-  initialiseForm()
   emit('close')
 }
 </script>
 
 <template>
-  <BaseModal :is-open="isOpen" @close="closeModal">
+  <BaseModal :is-open="isOpen" @close="$emit('close')">
     <template #content>
       <div class="p-10 py-8 pb-16 text-center">
         <h1 class="text-2xl font-medium">
