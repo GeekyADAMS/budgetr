@@ -121,7 +121,7 @@ const createBudget = () => {
       <MetricCard
         class="w-3/12"
         :class="[budgetDeficit < 0 ? 'text-red-500' : 'text-green-500']"
-        title="Monthly Budget Suplus/Deficit"
+        :title="`Budget ${budgetDeficit < 0 ? 'Deficit' : 'Surplus'}`"
         :value="Math.abs(budgetDeficit)"
       >
         <template #icon>

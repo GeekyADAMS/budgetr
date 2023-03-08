@@ -13,7 +13,7 @@ const props = defineProps({
     default: ''
   },
   options: {
-    type: Array,
+    type: Array as PropType<SelectOption[] | BudgetCategory[]>,
     required: true
   },
   required: {
@@ -52,7 +52,7 @@ const isTouched = ref<Boolean>(false)
         <option value="" disabled selected>{{ placeholder }}</option>
 
         <option v-for="(option, optionIndex) in options" :key="optionIndex" :value="option">
-          {{ option.title }}
+          {{ option?.title }}
         </option>
       </select>
     </label>

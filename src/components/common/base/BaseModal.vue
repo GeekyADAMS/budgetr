@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { toRefs } from 'vue'
 
-import RoundCloseWhite from '@@/icons/RoundCloseWhite.vue'
+import RoundCloseWhite from '@/components/icons/RoundCloseWhite.vue'
 
 const props = defineProps({
   isOpen: {

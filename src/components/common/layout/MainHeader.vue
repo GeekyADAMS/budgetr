@@ -5,7 +5,10 @@ import ProfilePreview from './ProfilePreview.vue'
 </script>
 
 <template>
-  <header class="w-full row-btwn border-b border-grey-lighter py-4 px-16">
+  <header
+    class="w-full row-btwn border-b border-grey-lighter py-4 px-16"
+    :style="{ zIndex: 99999 }"
+  >
     <BudgetrLogo />
 
     <MainNav />
