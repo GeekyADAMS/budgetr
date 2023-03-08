@@ -47,7 +47,7 @@ const createCategory = async () => {
   if (error) {
     toast.error(error)
   } else {
-    toast.success(`New budget category <${newCategory.title}> added!`)
+    toast.success(`New budget category "${newCategory.title}" added!`)
     emit('close')
   }
 

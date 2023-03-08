@@ -17,8 +17,12 @@ const showCreateCatModal = ref(false)
 
 const selectedExpense = ref<Expense | null>(null)
 
-const removeCategory = (id: string) => {
-  categoryStore.removeCategory(id)
+const removeCategory = (id: string, title: string) => {
+  const confirmation = confirm(`Are you sure you want to remove this "${title}" category?`)
+
+  if (confirmation) {
+    categoryStore.removeCategory(id)
+  }
 }
 </script>
 
@@ -47,7 +51,7 @@ const removeCategory = (id: string) => {
             :data="category"
             class="mb-4"
             :style="{ width: '30%' }"
-            @remove="removeCategory(category.id)"
+            @remove="removeCategory(category.id, category.title)"
           />
         </div>
       </div>

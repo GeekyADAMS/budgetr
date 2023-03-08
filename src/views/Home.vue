@@ -61,6 +61,10 @@ const changeMonth = (value: number) => {
     currentDate.value,
     allExpenses.value
   )
+
+  if (graphYear.value !== currentDate.value.getFullYear()) {
+    graphYear.value = currentDate.value.getFullYear()
+  }
 }
 
 const graphYear = ref<number>(new Date().getFullYear())

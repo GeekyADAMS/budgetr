@@ -98,7 +98,7 @@ const setExpenseCategory = (val: BudgetCategory) => {
             v-model:value="expenseData.title"
             class="mb-4"
             id="expense-name"
-            label="Expense Title"
+            label="Expense Name"
             max-length="150"
             :required="true"
           />
@@ -140,9 +140,9 @@ const setExpenseCategory = (val: BudgetCategory) => {
           >
             {{
               isSavingExpense
-                ? 'Adding category..'
+                ? 'Adding expense..'
                 : mode === 'create'
-                ? 'Add Category'
+                ? 'Save New Expense'
                 : 'Save Changes'
             }}
           </button>

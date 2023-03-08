@@ -18,7 +18,7 @@ const { isOpen, styles } = toRefs(props)
 </script>
 
 <template>
-  <div v-if="isOpen" class="w-screen h-screen fixed top-0 left-0 modal z-50">
+  <div v-if="isOpen" class="w-screen h-screen fixed top-0 left-0 modal" :style="{ zIndex: 200 }">
     <div
       class="backdrop w-full h-full absolute bg-dark bg-opacity-80 backdrop-blur z-20"
       @click="$emit('close')"
